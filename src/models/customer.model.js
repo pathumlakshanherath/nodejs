@@ -1,7 +1,7 @@
 const {DataTypes} = require('sequelize');
-const sequelize = require('../../config/database');
+const sequelize = require('../config/database');
 
-const User = sequelize.define('User', {
+const Customer = sequelize.define('Customer', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -24,6 +24,10 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    mobile: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     isActive: {
         type: DataTypes.BOOLEAN,
         defaultValue: true
@@ -32,4 +36,4 @@ const User = sequelize.define('User', {
     timestamps: true
 });
 
-module.exports = User;
+module.exports = Customer;

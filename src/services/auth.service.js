@@ -1,22 +1,14 @@
-const User = require('../persistance/user/user.model');
+const Customer = require('../models/customer.model');
 const jwt = require('jsonwebtoken');
-const {AppError, NotFoundError, BadRequestError, UnauthorizedError} = require('../middlewares/error/custom.error');
+const {NotFoundError, BadRequestError, UnauthorizedError} = require('../middlewares/error/custom.error');
 
-class UserService {
-
-    static async findAll() {
-        try {
-            return await User.findAll();
-        } catch (error) {
-            throw new AppError('Error fetching all users', 500);
-        }
-    }
+class CustomerService {
 
     static async findByEmail(email) {
         console.log(email)
-        const user = await User.findOne({ where: { email: email } });
+        const user = await Customer.findOne({ where: { email: email } });
         if (!user) {
-            throw new NotFoundError('User not found');
+            throw new NotFoundError('Customer not found');
         }
         return user;
     }
@@ -29,7 +21,7 @@ class UserService {
     }
 
     static async signup({email, password, name}) {
-            await User.create({
+            await Customer.create({
                 name,
                 email,
                 password,
@@ -54,4 +46,4 @@ class UserService {
     }
 }
 
-module.exports = UserService;
+module.exports = CustomerService;

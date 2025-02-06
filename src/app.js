@@ -1,11 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
-const morgan = require('morgan');
 const dotenv = require('dotenv');
 
 const errorHandler = require('./middlewares/error/errorHandler');
-const userRoutes = require('./routes/user.routes');
+const userRoutes = require('./routes/auth.routes');
 const authMiddleware = require('./middlewares/auth.middleware');
 
 const PORT = process.env.PORT || 3000;
@@ -20,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 app.use(authMiddleware);
-app.use('/users', userRoutes);
+app.use(userRoutes);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
