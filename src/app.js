@@ -4,9 +4,9 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 
-const errorHandler = require('./config/errorHandler');
-const userRoutes = require('./routes/userRoutes');
-
+const errorHandler = require('./middlewares/error/errorHandler');
+const userRoutes = require('./routes/user.routes');
+const authMiddleware = require('./middlewares/auth.middleware');
 
 const PORT = process.env.PORT || 3000;
 
@@ -14,16 +14,14 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
 app.use(helmet());
-app.use(cors()); // Enable CORS
-app.use(morgan('dev')); // Logging
-app.use(express.json()); // Parse JSON bodies
-app.use(express.urlencoded({extended: true})); // Parse URL-encoded bodies
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
-app.use(errorHandler);
+app.use(authMiddleware);
 app.use('/users', userRoutes);
-
+app.use(errorHandler);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
