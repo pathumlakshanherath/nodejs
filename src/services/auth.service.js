@@ -6,7 +6,7 @@ class CustomerService {
 
     static async findByEmail(email) {
         console.log(email)
-        const user = await Customer.findOne({ where: { email: email } });
+        const user = await Customer.findOne({where: {email: email}});
         if (!user) {
             throw new NotFoundError('Customer not found');
         }
@@ -20,13 +20,11 @@ class CustomerService {
         });
     }
 
-    static async signup({email, password, name}) {
-            await Customer.create({
-                name,
-                email,
-                password,
-            });
-            return this.signToken(email);
+    static async signup({email, password, name, mobile}) {
+        await Customer.create({
+            name, email, password, mobile
+        });
+        return this.signToken(email);
 
     }
 
